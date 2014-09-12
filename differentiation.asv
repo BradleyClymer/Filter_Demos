@@ -1,0 +1,35 @@
+function signal_differentiation
+clear, close all hidden
+set( 0 , 'DefaultAxesXgrid' , 'on' , 'DefaultAxesYgrid' , 'on', 'DefaultAxesZgrid' , 'on')
+set( 0 , 'DefaultFigureUnits' , 'Normalized' )
+set( 0 , 'DefaultFigurePosition' , [ 0.1 0.1 0.8 0.8 ] )
+set( 0 , 'DefaultLineLinesmoothing' , 'on' ) 
+set( 0 , 'DefaultLineLinewidth' , 1 )
+load handel;
+start       = 2000                          ;
+length      = 2 ^ 15                        ;
+end       = start + length - 1            ; 
+y_short     = y( range )  ;
+y_diff      = diff( y_short )    ;
+
+% sound( y_short , Fs )
+
+sp( 1 ) = subplot( 221 )
+plot( y_short )
+sp( 2 ) = subplot( 224 ) 
+plot( y_diff ) 
+axis tight
+linkaxes( sp ) 
+sound( y_diff ) 
+
+end
+
+function signal_fft( y_in , Fs )
+T       = 1/Fs                                                  ;	% Sample period
+L       = numel( y_in )                                         ;	% Length of signal
+t       = (0:L-1)*T                                             ;	% Time vector
+num_fft = nextpow2( L )     
+plot(Fs*t(1:50),y(1:50))
+title('Signal Corrupted with Zero-Mean Random Noise')
+xlabel('time (milliseconds)')
+end
