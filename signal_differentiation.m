@@ -11,7 +11,7 @@ set( 0 , 'DefaultLineLinewidth' , 1 )
                   load handel                     	;
 % Fs              = 1                  
 % y               = 1 * rand( size( y ) ) - 0.5     	;
-y               = medfilt2( y , [ 20 , 1 ] )        ;
+% y               = medfilt2( y , [ 20 , 1 ] )        ;
 period          = 1 / Fs                            ;
 time            = ( 0 : ( numel( y )-1 ) ) * period ;
 start           = 2000                              ;
@@ -100,10 +100,11 @@ passband        = ( fss > bp( 1 ) ) & ( fss < bp( 2 ) )                 ;
 filt_spectrum   = fss                                                   ;
 filt_spectrum( ~passband ) = 0                                          ;
 filtered        = ( ifft( filt_spectrum ) )                             ;
+[ ~ , secondary]= signal_fft( Fs , filtered )
 % filtered        = filtered( 1 : 8192/2 )                                ;
 figure
 subplot( 131 )
-plot( fss , signal_fft( Fs , filtered ) )
+plot( fss , secondary )
 title( 'Filtered spectrum' ) 
 subplot( 132 ) 
 plot( [ real( filtered )' imag( filtered )' ] )
